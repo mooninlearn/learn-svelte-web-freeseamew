@@ -1,11 +1,16 @@
 <script>
-	export let name;
-	</script>
-	
-	<style>
-	h1 {
-		color: purple;
-	}
-	</style>
-	
-	<h1>Hello {name}</h1>
+	import Header from './components/header.svelte'
+	import Content from './components/content.svelte'
+	import Bottom from './components/bottom.svelte'
+</script>
+
+<Header />
+<Content />
+<Bottom />
+
+<!-- <script>
+	import Child from './child.svelte';
+	let carryValue = 12;
+</script>
+
+<Child {carryValue} /> -->

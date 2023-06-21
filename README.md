@@ -18,6 +18,162 @@ C:\MoonDev\withTool\inSvelte\svelteLearning> bootapp -u mooninlearn -n learn-sve
 
 # 3. 컴포넌트 - 기본
 
+## 컴포넌트 통신방법 1 : props
+state 즉 상태값은 해당 state를 만든 자기자신 컴포넌트에서만 쓰이는 경우도 있지만 state를 다른 컴포넌트에서전달해서 사용하는 경우도 매우 많습니다.
+
+2) props 설명
+state의 전달에서 가장 기본이 되는 방법은 부모(상위)컴포넌트에서 자식(하위) 컴포넌트로 값을 전달하는 경우입니다. 이럴 경우 사용 되는 기본 전달 방법인 바로 props입니다.
+
+### 예제 1
+> App.svelte
+
+```svelte
+<script>
+import Child from './child.svelte'
+</script>
+​
+<SChildComp carryValue = { 12 } >
+```​
+
+태그 형태의 컴포넌트에 prop이름 = { 전달값 } 이 형태로 값을 전달할 수 있습니다.
+
+> Child.svelte
+
+```svelte
+<script>
+	export let carryValue
+</script>
+```​
+
+<p> 전달된 값은 { carryValue } 입니다. </p>
+자식컴포넌트로 전달된 값은 export let props이름 이 형태로 받아서 사용 가능합니다.
+정의된 state를 전달하는 방법도 있습니다. 가장 기본적으로 많이 쓰이는 방법입니다.
+
+```svelte
+<script>
+	import Child from './child.svelte';
+	let carryValue = 12;
+</script>
+
+<Child {carryValue} />
+​
+// Child.svelte
+<script>
+	export let carryValue
+</script>
+
+<p> 전달된 값은 { carryValue } 입니다. </p>
+​​```
+
+props는 또한 함수도 전달가능합니다.
+
+> App.svelte
+
+```svelte
+<script>
+import Child from './components/child.svelte'
+​
+let value = 0
+​
+function handleValueAdd(event, param) {
+	value = value + param
+}
+​
+</script>
+​
+<p>value : {value}</p> 
+​
+<Child {handleValueAdd} />
+​
+// child.svelte
+<script>
+​
+import SubChild from './subChild.svelte'
+​
+export let handleValueAdd
+​
+</script>
+​
+<SubChild {handleValueAdd} />
+​
+// subChild.svelte
+<script>
+​
+export let value
+export let handleValueAdd
+​
+</script>
+​
+<button on:click={(event) => handleValueAdd(event,10)} >Add 10</button>
+<button on:click={(event) => handleValueAdd(event,20)} >Add 20</button>
+```
+
+### 예제 - props
+
+> App.svelte
+​
+```svelte
+<script>
+import PanelComponent from './components/panelComponent.svelte'
+​
+let count = 10
+​
+function incrementCount() {
+	// count = count + 1
+	count ++
+​
+}
+​
+</script>
+​
+<PanelComponent {count} {incrementCount} />
+```
+
+> panelComponent.svelte
+
+```svelte
+<script>
+import ButtonComponent from './buttonComponent.svelte'
+​
+export let count
+export let incrementCount
+</script>
+​
+<div class="penal">
+  <h1>{count}</h1>
+​
+  <ButtonComponent {incrementCount} />
+</div>
+​
+<style>
+  .penal {
+    padding: 20px;
+    display:flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: space-around;
+    align-items: center;
+    height: 500px;
+    width:400px;
+    background: #e2e2e2;
+    border: 1px solid #777777;
+  }
+</style>
+```
+
+> buttonComponent.svelte
+
+```svelte
+<script>
+export let count
+export let incrementCount
+</script>
+​
+<button on:click={incrementCount} >
+  increment count [{count}]
+</button>
+```
+
 ## 앱 구조 설명 : main.js, App.js, 폴더구조
 
 1) 기본 구조
