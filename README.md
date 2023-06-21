@@ -14,7 +14,69 @@
 C:\MoonDev\withTool\inSvelte\svelteLearning> bootapp -u mooninlearn -n learn-svelte-web-freeseamew -d "만들면서 배우는 svelte(https://freeseamew.gitbook.io/svelte/)" -t svelte-web-template-js
 ```
 
-===
+-----
+
+# 3. 컴포넌트 - 기본
+
+## 앱 구조 설명 : main.js, App.js, 폴더구조
+
+1) 기본 구조
+설치 폴더 기본 구조
+
+"""
+svelte
+│   └── public
+│        ├── favicon.png
+│        ├── global.css
+│        └── index.html
+├── scripts
+├── src
+│   ├── App.svelte
+│   └── main.js
+├── package.json
+└── rollup.config.js
+"""
+
+이제 src 폴더를 보도록 하겠습니다. 이제부터 여러분이 작성할 대부분의 코드는 src 폴더 아래에 작성이 될 것입니다.
+이 src 폴더에 기본적으로 생성되는 파일은 App.svelte 와 main.js가 있습니다. App.svelte는 사용하는 컴포넌트들을 담는 가장 첫번째 컴포넌트로서 모든 컴포넌트의 부모 컴포넌트라고 보시면 됩니다. 그리고 main.js는 가장 먼저 실행되는 javascript파일로 js 및 서비스의 시작점이라고 생각하시면 됩니다. 이 main.js의 가장 큰 역할 중에 하나는 이 App.js를 index.html 파일에 위치시키고 서비스를 시작하는 기능이 되겠습니다.
+
+> App.svlete
+
+```svelte
+<script>
+export let name;
+</script>
+
+<style>
+h1 {
+	color: purple;
+}
+</style>
+
+<h1>Hello {name}</h1>
+```
+
+svelte파일에는 script, css, html 을 필요에 따라 구성해 사용할 수 있습니다.
+
+> main.js
+
+```js
+import App from './App.svelte'
+
+const app = new App({
+	target: document.body,
+	props: {
+		name: 'world'
+	}
+})
+
+export default app
+```
+
+main.js 는 App을 불러와 target을 이용해 만들어진 앱을 배치시켜 실행시킵니다.
+그리고 public 폴더의 global.css 에 스타일을 지정해 두면 스타일이 전역으로 설정되므로 공통으로 사용되는 css를 이곳에 설정해 두면 편리합니다.
+
+-----
 
 # 1. svelte 소개 - 만들면서 배우는 svelte
 svelte는 2016년경 만들어진 매우 젋은 프레임워크 입니다. 2019년도에 관심도가 급격히 상승했는데요, 저도 이때즘 svelte를 접하게 되었습니다.
