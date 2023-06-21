@@ -1,0 +1,9 @@
+# modules
+node_modules/
+
+# binary
+*.exe
+
+# folders
+/public/build/
+_*/
